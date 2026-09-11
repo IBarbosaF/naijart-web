@@ -1,0 +1,224 @@
+// Ajusta la ruta de @use según la ubicación final del componente
+// (asumiendo src/app/layout/footer/footer.scss)
+@use '../../../styles/mixins' as *;
+
+.footer {
+  background-color: var(--color-black);
+  border-top: 1px solid var(--color-gray-900);
+
+  &__top {
+    @include container;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+    padding-block: var(--space-16) var(--space-12);
+
+    @include respond(tablet) {
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: var(--space-8);
+    }
+  }
+
+  // ===== BRAND =====
+  &__brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  &__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    text-decoration: none;
+    width: fit-content;
+
+    @include focus-ring;
+  }
+
+  &__logo-text {
+    font-family: var(--font-heading);
+    font-size: var(--fs-h4);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    background: linear-gradient(
+      90deg,
+      var(--color-green-500) 20%,
+      var(--color-white) 40%,
+      var(--color-gold-500) 80%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  &__tagline {
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+    color: var(--color-gray-500);
+    max-width: 24ch;
+    line-height: var(--lh-body);
+  }
+
+  &__social {
+    display: flex;
+    gap: var(--space-3);
+  }
+
+  &__social-link {
+    @include flex-center;
+
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--color-gray-700);
+    border-radius: var(--radius-pill);
+    color: var(--color-gray-300);
+    transition:
+      color var(--transition-base),
+      border-color var(--transition-base);
+
+    @include focus-ring;
+
+    svg {
+      width: 1.1rem;
+      height: 1.1rem;
+    }
+
+    &:hover {
+      color: var(--color-gold-500);
+      border-color: var(--color-gold-500);
+    }
+  }
+
+  // ===== NAV =====
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  &__nav-title {
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-semibold);
+    color: var(--color-white);
+    margin-bottom: var(--space-1);
+  }
+
+  &__nav-link {
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+    color: var(--color-gray-500);
+    text-decoration: none;
+    width: fit-content;
+    transition: color var(--transition-base);
+
+    @include focus-ring;
+
+    &:hover {
+      color: var(--color-gold-500);
+    }
+  }
+
+  // ===== NEWSLETTER =====
+  &__newsletter {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  &__newsletter-copy {
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+    color: var(--color-gray-500);
+    line-height: var(--lh-body);
+  }
+
+  &__form {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  &__form-input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: 1px solid var(--color-gray-700);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-3);
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+    color: var(--color-white);
+    transition: border-color var(--transition-base);
+
+    &::placeholder {
+      color: var(--color-gray-500);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-gold-300);
+      outline-offset: 2px;
+      border-color: var(--color-gold-500);
+    }
+
+    &[aria-invalid='true'] {
+      border-color: var(--color-error);
+    }
+  }
+
+  &__form-submit {
+    flex-shrink: 0;
+  }
+
+  &__form-message {
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+
+    &--success {
+      color: var(--color-success);
+    }
+
+    &--error {
+      color: var(--color-error);
+    }
+  }
+
+  // ===== BOTTOM BAR =====
+  &__bottom {
+    border-top: 1px solid var(--color-gray-900);
+    padding-block: var(--space-6);
+  }
+
+  &__bottom-inner {
+    @include container;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    text-align: center;
+  }
+
+  &__copyright,
+  &__credit {
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+    color: var(--color-gray-500);
+  }
+
+  &__credit-link {
+    color: var(--color-gray-300);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-gray-700);
+    transition:
+      color var(--transition-base),
+      border-color var(--transition-base);
+
+    @include focus-ring;
+
+    &:hover {
+      color: var(--color-gold-500);
+      border-color: var(--color-gold-500);
+    }
+  }
+}

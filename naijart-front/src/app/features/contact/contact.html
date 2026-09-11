@@ -1,0 +1,126 @@
+<section class="contact">
+  <div class="contact__intro">
+    <span class="contact__eyebrow">{{ 'contact.eyebrow' | translate }}</span>
+    <h1 class="contact__title">{{ 'contact.title' | translate }}</h1>
+    <p class="contact__subtitle">{{ 'contact.subtitle' | translate }}</p>
+  </div>
+
+  <div class="contact__grid">
+    <!-- FORMULARIO -->
+    <form class="contact__form" [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-group">
+        <label for="name">{{ 'contact.form.name' | translate }}</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          [placeholder]="'contact.form.namePlaceholder' | translate"
+          [class.is-invalid]="name?.invalid && name?.touched"
+        />
+        @if (name?.invalid && name?.touched) {
+          <span class="form-error">{{ 'contact.form.nameError' | translate }}</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="email">{{ 'contact.form.email' | translate }}</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          [placeholder]="'contact.form.emailPlaceholder' | translate"
+          [class.is-invalid]="email?.invalid && email?.touched"
+        />
+        @if (email?.invalid && email?.touched) {
+          <span class="form-error">{{ 'contact.form.emailError' | translate }}</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="subject">{{ 'contact.form.subject' | translate }}</label>
+        <select id="subject" formControlName="subject">
+          @for (option of subjectOptions; track option.value) {
+            <option [value]="option.value">{{ option.labelKey | translate }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="message">{{ 'contact.form.message' | translate }}</label>
+        <textarea
+          id="message"
+          rows="5"
+          formControlName="message"
+          [placeholder]="'contact.form.messagePlaceholder' | translate"
+          [class.is-invalid]="message?.invalid && message?.touched"
+        ></textarea>
+        @if (message?.invalid && message?.touched) {
+          <span class="form-error">{{ 'contact.form.messageError' | translate }}</span>
+        }
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn--primary contact__submit"
+        [disabled]="submitState() === 'sending'"
+      >
+        @switch (submitState()) {
+          @case ('sending') { {{ 'contact.form.sending' | translate }} }
+          @case ('success') { {{ 'contact.form.sent' | translate }} }
+          @default { {{ 'contact.form.submit' | translate }} }
+        }
+      </button>
+
+      @if (submitState() === 'success') {
+        <p class="contact__feedback contact__feedback--success" role="status">
+          {{ 'contact.form.success' | translate }}
+        </p>
+      }
+      @if (submitState() === 'error') {
+        <p class="contact__feedback contact__feedback--error" role="alert">
+          {{ 'contact.form.error' | translate }}
+        </p>
+      }
+    </form>
+
+    <!-- TARJETA DORADA -->
+    <aside class="gold-card">
+      <div class="gold-card__accent"></div>
+
+      <h2 class="gold-card__title">{{ 'contact.info.title' | translate }}</h2>
+
+      <ul class="gold-card__info">
+        <li>
+          <span class="gold-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M3 6l9 7 9-7M3 6h18v12H3V6z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <a href="mailto:info@naijart.org">info&#64;naijart.org</a>
+        </li>
+        <li>
+          <span class="gold-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.4-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.8 2.1z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <a href="tel:+34000000000">+34 000 000 000</a>
+        </li>
+        <li>
+          <span class="gold-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg>
+          </span>
+          <span>{{ 'contact.info.location' | translate }}</span>
+        </li>
+      </ul>
+
+      <div class="gold-card__divider"></div>
+
+      <h3 class="gold-card__subtitle">{{ 'contact.info.scheduleTitle' | translate }}</h3>
+      <ul class="gold-card__schedule">
+        @for (row of scheduleRows; track row.dayKey) {
+          <li>
+            <span>{{ row.dayKey | translate }}</span>
+            <span>{{ row.hoursKey | translate }}</span>
+          </li>
+        }
+      </ul>
+    </aside>
+  </div>
+</section>

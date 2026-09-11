@@ -1,0 +1,85 @@
+// src/styles/_typography.scss
+
+// ===== TÍTULOS =====
+// Todos comparten la fuente serif de marca y el interlineado ajustado,
+// solo cambia el tamaño y, en algún caso, el peso.
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--font-heading);
+  line-height: var(--lh-heading);
+  font-weight: var(--fw-bold);
+  color: var(--color-white);
+}
+
+h1, .h1 {
+  font-size: var(--fs-h1);
+}
+
+h2, .h2 {
+  font-size: var(--fs-h2);
+}
+
+h3, .h3 {
+  font-size: var(--fs-h3);
+}
+
+h4, .h4 {
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+}
+
+h5, .h5 {
+  font-size: var(--fs-h5);
+  font-weight: var(--fw-semibold);
+}
+
+h6, .h6 {
+  font-size: var(--fs-h6);
+  font-weight: var(--fw-semibold);
+}
+
+// ===== PÁRRAFOS Y TEXTO BASE =====
+p {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
+  color: var(--color-gray-300);
+}
+
+// ===== TEXTO PEQUEÑO (labels, notas, footer) =====
+small,
+.text-small {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
+  color: var(--color-gray-500);
+}
+
+// ===== UTILIDADES DE PESO =====
+// Para cuando necesites forzar un peso puntual sin crear un componente nuevo
+.fw-regular  { font-weight: var(--fw-regular); }
+.fw-semibold { font-weight: var(--fw-semibold); }
+.fw-bold     { font-weight: var(--fw-bold); }
+
+// ===== UTILIDADES DE COLOR DE TEXTO (marca) =====
+// Para destacar palabras sueltas dentro de un título o párrafo,
+// como en el borrador: "artistas nigerianos" en dorado, "Europa" en azul
+.text-gold  { color: var(--color-gold-500); }
+.text-green { color: var(--color-green-500); }
+.text-blue  { color: var(--color-blue-300); }
+.text-white { color: var(--color-white); }
+.text-muted { color: var(--color-gray-500); }
+
+// ===== ENLACES DE TEXTO (no de navegación) =====
+// Para enlaces dentro de párrafos, ej. dentro del blog
+.text-link {
+  color: var(--color-gold-500);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--transition-base);
+
+  &:hover {
+    color: var(--color-gold-300);
+  }
+}

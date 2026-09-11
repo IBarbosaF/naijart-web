@@ -1,0 +1,381 @@
+{
+  "nav": {
+    "gallery": "Galerie",
+    "calendar": "Calendrier",
+    "about": "Qui sommes-nous",
+    "join": "Rejoignez-nous",
+    "contact": "Contact"
+  },
+  "common": {
+    "login": "Connexion",
+    "mainNav": "Navigation principale",
+    "mobileNav": "Navigation mobile",
+    "langSelector": "Sélecteur de langue",
+    "openMenu": "Ouvrir le menu",
+    "socialLinks": "Réseaux sociaux",
+    "siteLinks": "Liens du site",
+    "close": "Fermer",
+    "instagramFollow": "Suivez-nous sur Instagram"
+  },
+  "titles": {
+    "home": "NAIJART — Accueil",
+    "gallery": "NAIJART — Galerie",
+    "calendar": "NAIJART — Calendrier",
+    "join": "NAIJART — Rejoignez-nous",
+    "contact": "NAIJART — Contact",
+    "about": "NAIJART — Qui sommes-nous"
+  },
+  "months": {
+    "sep": "sept.",
+    "oct": "oct."
+  },
+  "footer": {
+    "tagline": "Du Nigéria à l'Europe. L'art sans frontières.",
+    "explore": "Explorer",
+    "subscribe": "Abonnez-vous",
+    "subscribeCopy": "Actualités des artistes, des événements et des expositions.",
+    "emailPlaceholder": "vous@email.com",
+    "send": "Envoyer",
+    "successMsg": "Merci pour votre abonnement !",
+    "errorMsg": "Saisissez une adresse e-mail valide.",
+    "copyright": "© {{year}} Naijart. Tous droits réservés.",
+    "madeBy": "Site web conçu et développé par"
+  },
+  "home": {
+    "hero": {
+      "heading": "Association d'<span class=\"text-gold\">artistes nigérians</span> créée pour promouvoir leur art en <span class=\"text-blue\">Europe</span>.",
+      "tagline": "Du <span class=\"text-green\">Nigéria</span> à l'<span class=\"text-blue\">Europe</span>. <span class=\"text-gold\">L'art sans frontières.</span>",
+      "badge": "Association à but non lucratif · enregistrée au Nigéria",
+      "viewGallery": "Voir la galerie",
+      "joinCommunity": "Rejoignez la communauté"
+    },
+    "services": {
+      "title": "Que faisons-nous ?",
+      "subtitle": "Nous voulons améliorer la société par l'art.",
+      "events": {
+        "title": "Événements",
+        "desc": "Expositions, concours et collaborations avec des ambassades et d'autres institutions."
+      },
+      "advice": {
+        "title": "Conseil",
+        "desc": "Accompagnement juridique et commercial des artistes et des collectionneurs."
+      },
+      "humanitarian": {
+        "title": "Projets humanitaires",
+        "desc": "Cours artistiques dans des orphelinats, des hôpitaux et des prisons."
+      }
+    },
+    "collaborators": {
+      "eyebrow": "Collaborateurs",
+      "title": "Nous travaillons avec"
+    },
+    "galleryPreview": {
+      "title": "L'art nigérian, sans frontières.",
+      "subtitle": "Naijart fait découvrir le travail des artistes nigérians aux lieux et aux publics d'Europe.",
+      "link": "Voir la galerie complète"
+    },
+    "eventsPreview": {
+      "title": "Prochains rendez-vous",
+      "link": "Voir le calendrier complet"
+    },
+    "joinCta": {
+      "heading": "Rejoignez Naijart",
+      "lead": "Nous sommes des artistes, des organisateurs et des amis de l'art qui travaillons ensemble pour ouvrir la voie en Europe.",
+      "button": "Rejoignez-nous"
+    },
+    "gallery": {
+      "placeholderTitle": "Œuvre {{n}}",
+      "placeholderArtist": "Artiste à confirmer"
+    },
+    "events": {
+      "event1": {
+        "title": "Exposition collective",
+        "location": "Galería Sur, Madrid",
+        "description": "Exposition collective de peinture et de sculpture réunissant sept artistes nigérians résidant en Espagne."
+      },
+      "event2": {
+        "title": "Rencontre d'artistes",
+        "location": "Centro Cultural, Séville",
+        "description": "Journée de mise en réseau entre les artistes de l'association, les galeristes locaux et la presse culturelle."
+      },
+      "event3": {
+        "title": "Atelier de peinture traditionnelle",
+        "location": "Espacio Naijart, Barcelone",
+        "description": "Atelier ouvert consacré aux techniques traditionnelles nigérianes, animé par des artistes de l'association."
+      }
+    }
+  },
+  "gallery": {
+    "title": "Galerie",
+    "subtitle": "Découvrez les œuvres de nos artistes",
+    "filterLabel": "Filtrer par catégorie",
+    "empty": "Il n'y a pas encore d'œuvres dans cette catégorie.",
+    "medium": "Technique",
+    "size": "Dimensions",
+    "viewArtwork": "Voir l'œuvre {{title}}",
+    "prev": "Œuvre précédente",
+    "next": "Œuvre suivante",
+    "categories": {
+      "all": "Toutes",
+      "painting": "Peinture",
+      "sculpture": "Sculpture",
+      "photography": "Photographie",
+      "textile": "Art Textile",
+      "digital": "Art Numérique"
+    },
+    "items": {
+      "i1": {
+        "title": "Esprit d'Osun",
+        "description": "Huile sur toile qui réinterprète la figure de la déesse Osun à travers une palette chaude de dorés et de verts profonds."
+      },
+      "i2": {
+        "title": "Masque du Silence",
+        "description": "Sculpture en bois d'iroko inspirée des masques cérémoniels igbo, traitée avec une patine de bronze."
+      },
+      "i3": {
+        "title": "Marché de Lagos à l'Aube",
+        "description": "Série documentaire sur la vie quotidienne dans les marchés de Lagos, saisie aux premières heures du jour."
+      },
+      "i4": {
+        "title": "Racines Tissées",
+        "description": "Tapisserie réalisée selon les techniques traditionnelles de tissage yoruba, combinées à du fil métallique doré."
+      },
+      "i5": {
+        "title": "Couronne Numérique",
+        "description": "Composition générative qui fusionne des motifs géométriques traditionnels et une esthétique afrofuturiste."
+      },
+      "i6": {
+        "title": "Danse de l'Harmattan",
+        "description": "Acrylique qui capture le mouvement des danseuses traditionnelles pendant la saison de l'harmattan."
+      },
+      "i7": {
+        "title": "Gardien de Bronze",
+        "description": "Fonte de bronze rendant hommage aux célèbres bronzes du Bénin."
+      },
+      "i8": {
+        "title": "Portraits d'Abuja",
+        "description": "Portraits en noir et blanc d'artisans et de commerçants de la capitale nigériane."
+      },
+      "i9": {
+        "title": "Étoffe d'Adire",
+        "description": "Tissu teint selon la technique traditionnelle adire, réinterprété avec des motifs contemporains."
+      },
+      "i10": {
+        "title": "Fragments d'Identité",
+        "description": "Collage numérique explorant l'identité de la diaspora nigériane en Europe."
+      },
+      "i11": {
+        "title": "Le Niger au Crépuscule",
+        "description": "Huile grand format représentant le fleuve Niger baigné de tons dorés au coucher du soleil."
+      },
+      "i12": {
+        "title": "Voix d'Ibadan",
+        "description": "Portrait collectif de la communauté artistique d'Ibadan."
+      }
+    }
+  },
+  "calendar": {
+    "upcoming": "Événements à venir",
+    "prevMonth": "Mois précédent",
+    "nextMonth": "Mois suivant",
+    "months": {
+      "m1": "Janvier",
+      "m2": "Février",
+      "m3": "Mars",
+      "m4": "Avril",
+      "m5": "Mai",
+      "m6": "Juin",
+      "m7": "Juillet",
+      "m8": "Août",
+      "m9": "Septembre",
+      "m10": "Octobre",
+      "m11": "Novembre",
+      "m12": "Décembre"
+    },
+    "weekdays": {
+      "d1": "L",
+      "d2": "M",
+      "d3": "M",
+      "d4": "J",
+      "d5": "V",
+      "d6": "S",
+      "d7": "D"
+    },
+    "events": {
+      "e1": {
+        "title": "Exposition : Racines",
+        "location": "Galería Sur, Séville",
+        "description": "Exposition collective de peinture et de sculpture d'artistes nigérians résidant en Espagne."
+      },
+      "e2": {
+        "title": "Atelier de tissage traditionnel",
+        "location": "Centro Cultural, Madrid",
+        "description": "Atelier pratique de techniques textiles yoruba, ouvert à tous les niveaux."
+      },
+      "e3": {
+        "title": "Soirée poésie et musique",
+        "location": "Casa África, Séville",
+        "description": "Une soirée de spoken word et de musique afrobeat en direct avec des artistes invités."
+      },
+      "e4": {
+        "title": "Conférence : l'art contemporain nigérian",
+        "location": "Université, Barcelone",
+        "description": "Table ronde sur les courants actuels de l'art nigérian dans la diaspora."
+      }
+    }
+  },
+  "team": {
+    "eyebrow": "L'équipe",
+    "title": "Qui sommes-nous",
+    "subtitle": "Les personnes derrière Naijart, qui œuvrent pour faire connaître l'art nigérian en Europe.",
+    "viewMore": "En savoir plus",
+    "partners": {
+      "title": "Partenaires stratégiques",
+      "pending": "Lien en attente",
+      "eyebrow": "Partenariats"
+    },
+    "members": {
+      "m1": {
+        "role": "Fondatrice & Directrice Artistique",
+        "bio": "Peintre et gestionnaire culturelle née à Lagos. A fondé Naijart en 2023 afin de créer des ponts entre l'art nigérian contemporain et le public européen."
+      },
+      "m2": {
+        "role": "Coordinateur Communautaire",
+        "bio": "Chargé de maintenir le lien entre les artistes membres et la communauté nigériane en Europe. Organise les rencontres mensuelles."
+      },
+      "m3": {
+        "role": "Responsable des Événements",
+        "bio": "Conçoit et coordonne expositions, foires et présentations dans différentes villes européennes. Dix ans d'expérience en gestion culturelle."
+      }
+    }
+  },
+  "join": {
+    "hero": {
+      "title": "Rejoignez Naijart",
+      "subtitle": "Nous recherchons des artistes qui souhaitent exposer leur travail en Europe et des personnes prêtes à collaborer avec l'association. Si vous vous reconnaissez, votre place est ici."
+    },
+    "benefits": {
+      "title": "Ce que l'adhésion vous apporte",
+      "b1": {
+        "title": "Visibilité internationale",
+        "description": "Votre travail touche un public européen grâce à nos expositions, nos événements et nos canaux numériques."
+      },
+      "b2": {
+        "title": "Communauté",
+        "description": "Vous faites partie d'un réseau d'artistes et de collaborateurs nigérians unis par un même objectif."
+      },
+      "b3": {
+        "title": "Ressources et formation",
+        "description": "Accès à des ateliers, du mentorat et des ressources conçus pour faire avancer votre carrière artistique ou votre travail de collaborateur."
+      },
+      "b4": {
+        "title": "Réseau de contacts",
+        "description": "Un lien direct avec des galeries, des organisateurs d'événements et d'autres associations culturelles en Europe."
+      }
+    },
+    "steps": {
+      "title": "Comment ça marche",
+      "s1": {
+        "title": "Envoyez votre candidature",
+        "description": "Remplissez le formulaire avec vos informations et parlez-nous un peu de vous."
+      },
+      "s2": {
+        "title": "Nous examinons votre profil",
+        "description": "Notre équipe examine chaque candidature avec attention, sans précipitation ni filtre automatique."
+      },
+      "s3": {
+        "title": "Nous vous contactons",
+        "description": "Nous vous écrivons par e-mail pour vous expliquer les prochaines étapes."
+      },
+      "s4": {
+        "title": "Vous faites partie de Naijart",
+        "description": "Nous vous accueillons dans la communauté et nous commençons à construire ensemble."
+      }
+    },
+    "testimonials": {
+      "title": "Voix de la communauté",
+      "name": "Prénom Nom",
+      "t1": {
+        "quote": "Rejoindre Naijart m'a ouvert des portes dont j'ignorais l'existence en Europe. Aujourd'hui, j'expose mon travail hors du Nigéria pour la première fois.",
+        "role": "Artiste visuel"
+      },
+      "t2": {
+        "quote": "En tant que bénévole, j'ai trouvé un espace où mon travail compte vraiment et où chaque contribution est valorisée.",
+        "role": "Collaboratrice"
+      },
+      "t3": {
+        "quote": "C'est la communauté que j'apprécie le plus. Je ne me suis jamais sentie seule sur ce chemin.",
+        "role": "Artiste textile"
+      }
+    },
+    "form": {
+      "title": "Parlez-nous de vous",
+      "lead": "Remplissez le formulaire et nous vous recontacterons dans les meilleurs délais.",
+      "typeLabel": "Type de profil",
+      "artist": "Je suis artiste",
+      "collaborator": "Je veux collaborer",
+      "name": "Nom complet",
+      "email": "E-mail",
+      "portfolio": "Lien vers votre portfolio ou vos réseaux",
+      "interestArea": "Domaine dans lequel vous souhaitez collaborer",
+      "selectOption": "Sélectionnez une option",
+      "socials": "Lien vers vos réseaux (facultatif)",
+      "message": "Parlez-nous un peu plus de vous",
+      "submit": "Envoyer la candidature"
+    },
+    "areas": {
+      "design": "Design graphique",
+      "events": "Organisation d'événements",
+      "social": "Réseaux sociaux",
+      "translation": "Traduction",
+      "other": "Autre"
+    },
+    "success": {
+      "title": "Merci, {{name}} !",
+      "text": "Nous avons bien reçu votre candidature. Nous vous écrirons prochainement à {{email}}.",
+      "again": "Envoyer une autre candidature"
+    }
+  },
+  "contact": {
+    "eyebrow": "Contactez-nous",
+    "title": "Parlons-en",
+    "subtitle": "Vous avez une proposition, vous souhaitez collaborer ou simplement nous dire bonjour ? Écrivez-nous et nous vous répondrons dans les meilleurs délais.",
+    "form": {
+      "name": "Nom complet",
+      "namePlaceholder": "Votre nom",
+      "nameError": "Saisissez votre nom (2 caractères minimum).",
+      "email": "Adresse e-mail",
+      "emailPlaceholder": "vous@email.com",
+      "emailError": "Saisissez une adresse e-mail valide.",
+      "subject": "Objet",
+      "message": "Message",
+      "messagePlaceholder": "Dites-nous comment nous pouvons vous aider...",
+      "messageError": "Le message doit contenir au moins 10 caractères.",
+      "sending": "Envoi...",
+      "sent": "Message envoyé !",
+      "submit": "Envoyer le message",
+      "success": "Merci de nous avoir écrit. Nous vous répondrons très bientôt.",
+      "error": "Une erreur s'est produite. Réessayez dans quelques minutes."
+    },
+    "subjects": {
+      "general": "Demande générale",
+      "collaboration": "Collaboration / Partenariat",
+      "press": "Presse",
+      "other": "Autre"
+    },
+    "info": {
+      "title": "Coordonnées",
+      "location": "Abuja, Nigéria",
+      "scheduleTitle": "Horaires",
+      "follow": "Suivez-nous"
+    },
+    "schedule": {
+      "weekdays": "Lundi – Vendredi",
+      "weekdaysHours": "9:00 – 18:00 (CET)",
+      "saturday": "Samedi",
+      "saturdayHours": "10:00 – 14:00 (CET)",
+      "sunday": "Dimanche",
+      "closed": "Fermé"
+    }
+  }
+}

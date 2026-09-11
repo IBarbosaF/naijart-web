@@ -1,0 +1,13 @@
+# ===== Frontend (naijart-front / Angular) =====
+naijart-front/node_modules/
+naijart-front/dist/
+naijart-front/.angular/
+
+# ===== Backend (naijart-api / Node-Express) =====
+naijart-api/node_modules/
+naijart-api/.env
+naijart-api/uploads/
+
+# ===== General =====
+.DS_Store
+*.log

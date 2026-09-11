@@ -1,0 +1,40 @@
+// src/styles/_scrollbar.scss
+
+// ===== SCROLLBAR: CHROME, EDGE, SAFARI (WebKit) =====
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-gray-700);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-black); // crea un "margen" visual alrededor del thumb
+
+  &:hover {
+    background-color: var(--color-gold-500);
+  }
+}
+
+// ===== SCROLLBAR: FIREFOX =====
+// Firefox no soporta los pseudo-elementos de arriba, usa esta propiedad aparte
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gray-700) var(--color-black);
+}
+
+// ===== SCROLLBAR HORIZONTAL PARA CARRUSELES =====
+// Para contenedores tipo "scroll-snap" (ej. el carrusel de "Próximos eventos"
+// que vimos en tu captura del home), una versión más fina y sutil
+.scroll-x {
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+}

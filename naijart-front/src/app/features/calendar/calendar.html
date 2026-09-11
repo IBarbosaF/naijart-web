@@ -1,0 +1,89 @@
+<section class="calendar">
+
+  <div class="calendar__upcoming">
+    <h3 class="calendar__upcoming-title">{{ 'calendar.upcoming' | translate }}</h3>
+    <ul class="calendar__upcoming-list">
+      @for (event of events; track event.id) {
+        <li class="calendar__upcoming-item" (click)="openEvent(event)">
+          <span class="calendar__upcoming-date">{{ formatEventDate(event.date) }}</span>
+          <span class="calendar__upcoming-name">{{ event.titleKey | translate }}</span>
+        </li>
+      }
+    </ul>
+  </div>
+
+  <div class="calendar__header">
+    <button
+      type="button"
+      class="calendar__nav"
+      (click)="prevMonth()"
+      [attr.aria-label]="'calendar.prevMonth' | translate">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M15 18l-6-6 6-6" />
+      </svg>
+    </button>
+
+    <h2 class="calendar__month">{{ monthLabel() }}</h2>
+
+    <button
+      type="button"
+      class="calendar__nav"
+      (click)="nextMonth()"
+      [attr.aria-label]="'calendar.nextMonth' | translate">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18l6-6-6-6" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="calendar__weekdays">
+    @for (wd of weekDayKeys; track wd) {
+      <span class="calendar__weekday">{{ wd | translate }}</span>
+    }
+  </div>
+
+  <div class="calendar__grid">
+    @for (day of calendarDays(); track day.date.getTime()) {
+      <button
+        type="button"
+        class="calendar__day"
+        [class.calendar__day--muted]="!day.isCurrentMonth"
+        [class.calendar__day--today]="day.isToday"
+        [class.calendar__day--has-event]="day.events.length > 0"
+        [disabled]="day.events.length === 0"
+        (click)="selectDay(day)"
+      >
+        <span class="calendar__day-number">{{ day.day }}</span>
+        @if (day.events.length > 0) {
+          <span class="calendar__day-dot"></span>
+        }
+      </button>
+    }
+  </div>
+
+</section>
+
+@if (selectedEvent(); as event) {
+  <div class="event-modal" (click)="closeModal()">
+    <div class="event-modal__content" (click)="$event.stopPropagation()">
+      <button
+        type="button"
+        class="event-modal__close"
+        (click)="closeModal()"
+        [attr.aria-label]="'common.close' | translate">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+
+      <img [src]="event.image" [alt]="event.titleKey | translate" class="event-modal__image" />
+
+      <div class="event-modal__body">
+        <h3 class="event-modal__title">{{ event.titleKey | translate }}</h3>
+        <p class="event-modal__meta">{{ formatEventDate(event.date) }} · {{ event.time }}</p>
+        <p class="event-modal__location">{{ event.locationKey | translate }}</p>
+        <p class="event-modal__description">{{ event.descriptionKey | translate }}</p>
+      </div>
+    </div>
+  </div>
+}

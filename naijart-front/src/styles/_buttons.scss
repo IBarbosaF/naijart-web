@@ -1,0 +1,128 @@
+// src/styles/_buttons.scss
+@use 'mixins' as *;
+
+// ===== BASE =====
+// Todos los botones parten de aquí, sea cual sea su variante
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-sm);
+  border: 1.5px solid transparent;
+
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  white-space: nowrap;
+
+  cursor: pointer;
+  transition: background-color var(--transition-base),
+              border-color var(--transition-base),
+              color var(--transition-base),
+              transform var(--transition-base);
+
+  @include focus-ring;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+// ===== VARIANTE PRIMARIA (dorado, para CTAs principales) =====
+.btn--primary {
+  background-color: var(--color-gold-500);
+  border-color: var(--color-gold-500);
+  color: var(--color-black);
+
+  &:hover {
+    background-color: var(--color-gold-300);
+    border-color: var(--color-gold-300);
+  }
+
+  &:active {
+    background-color: var(--color-gold-700);
+    border-color: var(--color-gold-700);
+    transform: scale(0.98);
+  }
+}
+
+// ===== VARIANTE SECUNDARIA (outline dorado, para acciones menos prioritarias) =====
+.btn--secondary {
+  background-color: transparent;
+  border-color: var(--color-gold-500);
+  color: var(--color-gold-500);
+
+  &:hover {
+    background-color: rgba(212, 175, 55, 0.1); // dorado al 10% de opacidad
+    border-color: var(--color-gold-300);
+    color: var(--color-gold-300);
+  }
+
+  &:active {
+    background-color: rgba(212, 175, 55, 0.2);
+    transform: scale(0.98);
+  }
+}
+
+// ===== VARIANTE TERCIARIA / TEXTO (sin fondo ni borde, ej. "Ver más") =====
+.btn--ghost {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-white);
+  padding-inline: var(--space-2);
+
+  &:hover {
+    color: var(--color-gold-300);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// ===== VARIANTE PELIGRO (para acciones destructivas, ej. eliminar) =====
+.btn--danger {
+  background-color: transparent;
+  border-color: var(--color-error);
+  color: var(--color-error);
+
+  &:hover {
+    background-color: rgba(214, 69, 69, 0.1);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// ===== TAMAÑOS =====
+.btn--sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--fs-small);
+}
+
+.btn--lg {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--fs-h6);
+}
+
+// ===== BOTÓN TIPO PÍLDORA (redondo completo) =====
+// Por si en algún CTA concreto (ej. "Enviar mensaje" del contacto) queréis
+// esquinas totalmente redondas en vez del radius-sm por defecto
+.btn--pill {
+  border-radius: var(--radius-pill);
+}
+
+// ===== BOTÓN SOLO ICONO (ej. corazón de "favorito" en la galería,
+// o el futuro botón flotante de Instagram) =====
+.btn--icon {
+  padding: var(--space-3);
+  border-radius: var(--radius-pill);
+  aspect-ratio: 1 / 1;
+}

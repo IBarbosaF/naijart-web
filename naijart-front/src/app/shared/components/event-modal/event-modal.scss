@@ -1,0 +1,90 @@
+// src/app/shared/components/event-modal/event-modal.scss
+// Ajusta las rutas de @use si la ubicación real del componente difiere
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
+
+// El elemento <app-event-modal> no debe generar su propia caja en el
+// layout — si no, puede interferir con el position:fixed del backdrop.
+:host {
+  display: contents;
+}
+
+.event-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: var(--z-modal);
+  padding: var(--space-4);
+  @include flex-center;
+}
+
+.event-modal__panel {
+  position: relative;
+  width: min(420px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: var(--color-gray-900);
+  border-top: 3px solid var(--color-gold-500);
+  border-radius: var(--radius-md);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-lg);
+}
+
+.event-modal__close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--color-gray-300);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  @include flex-center;
+  @include focus-ring;
+
+  &:hover {
+    color: var(--color-white);
+  }
+}
+
+.event-modal__image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
+}
+
+.event-modal__date {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--color-gold-300);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 var(--space-2);
+}
+
+.event-modal__title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h4);
+  color: var(--color-white);
+  margin: 0 0 var(--space-2);
+}
+
+.event-modal__location {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--color-gray-300);
+  margin: 0 0 var(--space-4);
+}
+
+.event-modal__description {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--color-gray-300);
+  margin: 0;
+}

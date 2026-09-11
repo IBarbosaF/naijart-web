@@ -1,0 +1,124 @@
+// src/styles/_animations.scss
+
+// ===== KEYFRAMES REUTILIZABLES =====
+
+// Aparición suave (para cards, secciones al hacer scroll, modales)
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Aparición + desplazamiento desde abajo (muy usado en landing pages)
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Aparición + escala (para modales, tarjetas destacadas)
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Rotación continua (útil para spinners de carga)
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Pulso suave (para llamar la atención sin ser agresivo, ej. badge "nuevo")
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+// Efecto "shimmer" para skeleton loaders (placeholders mientras carga contenido)
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+// ===== CLASES DE UTILIDAD =====
+// Aplican las animaciones de arriba directamente vía clase,
+// para no tener que escribir "animation: ..." en cada componente
+
+.anim-fade-in {
+  animation: fade-in var(--transition-slow) ease-in-out both;
+}
+
+.anim-fade-in-up {
+  animation: fade-in-up var(--transition-slow) ease-out both;
+}
+
+.anim-scale-in {
+  animation: scale-in var(--transition-base) ease-out both;
+}
+
+.anim-spin {
+  animation: spin 1s linear infinite;
+}
+
+.anim-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+// ===== SKELETON LOADER =====
+// Para mostrar mientras cargan las obras de la galería, por ejemplo
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-gray-900) 25%,
+    var(--color-gray-700) 50%,
+    var(--color-gray-900) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+// ===== DELAYS ESCALONADOS =====
+// Para cuando varias cards aparecen una detrás de otra (efecto cascada),
+// ej. las 8 obras de la galería. Se añade junto a .anim-fade-in-up
+.anim-delay-1 { animation-delay: 0.1s; }
+.anim-delay-2 { animation-delay: 0.2s; }
+.anim-delay-3 { animation-delay: 0.3s; }
+.anim-delay-4 { animation-delay: 0.4s; }
+
+// ===== RESPETO A prefers-reduced-motion =====
+// El reset ya frena esto globalmente, pero lo reforzamos aquí específicamente
+// para animaciones infinitas (spin, pulse, shimmer) que no son solo "transición"
+@media (prefers-reduced-motion: reduce) {
+  .anim-spin,
+  .anim-pulse,
+  .skeleton {
+    animation: none;
+  }
+}

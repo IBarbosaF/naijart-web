@@ -1,0 +1,108 @@
+<section class="gallery">
+  <div class="gallery__container">
+
+    <header class="gallery__header">
+      <h1>{{ 'gallery.title' | translate }}</h1>
+      <p>{{ 'gallery.subtitle' | translate }}</p>
+    </header>
+
+    <nav class="gallery__filters" [attr.aria-label]="'gallery.filterLabel' | translate">
+      @for (cat of categories(); track cat) {
+        <button
+          type="button"
+          class="gallery__filter-pill"
+          [class.gallery__filter-pill--active]="selectedCategory() === cat"
+          (click)="selectCategory(cat)">
+          {{ categoryLabelKey(cat) | translate }}
+        </button>
+      }
+    </nav>
+
+    <div class="gallery__masonry">
+      @for (artwork of filteredArtworks(); track artwork.id) {
+        <article
+          class="gallery__card"
+          tabindex="0"
+          role="button"
+          [attr.aria-label]="('gallery.viewArtwork' | translate:{ title: artworkTitle(artwork) })"
+          (click)="openLightbox(artwork)"
+          (keydown.enter)="openLightbox(artwork)">
+          <img
+            class="gallery__image"
+            [src]="artwork.image"
+            [alt]="artworkTitle(artwork)"
+            loading="lazy" />
+          <div class="gallery__overlay">
+            <h3 class="gallery__overlay-title">
+              {{ artwork.title ?? (artwork.titleKey | translate) }}
+            </h3>
+            <p class="gallery__overlay-artist">{{ artwork.artist }}</p>
+          </div>
+        </article>
+      } @empty {
+        <p class="gallery__empty">{{ 'gallery.empty' | translate }}</p>
+      }
+    </div>
+
+  </div>
+
+  @if (lightboxOpen() && currentArtwork(); as artwork) {
+    <div class="lightbox" (click)="closeLightbox()">
+
+      <button
+        class="lightbox__close"
+        type="button"
+        [attr.aria-label]="'common.close' | translate"
+        (click)="closeLightbox()">&times;</button>
+
+      <button
+        class="lightbox__nav lightbox__nav--prev"
+        type="button"
+        [attr.aria-label]="'gallery.prev' | translate"
+        (click)="prev(); $event.stopPropagation()">
+        &#8249;
+      </button>
+
+      <div class="lightbox__content" (click)="$event.stopPropagation()">
+        <img class="lightbox__image" [src]="artwork.image" [alt]="artworkTitle(artwork)" />
+        <div class="lightbox__info">
+          <span class="lightbox__category">{{ artwork.categoryKey | translate }}</span>
+          <h2>{{ artwork.title ?? (artwork.titleKey | translate) }}</h2>
+          <p class="lightbox__artist">
+            {{ artwork.artist }}@if (artwork.year) { · {{ artwork.year }} }
+          </p>
+
+          @if (artwork.medium || artwork.size) {
+            <dl class="lightbox__meta">
+              @if (artwork.medium) {
+                <div class="lightbox__meta-row">
+                  <dt>{{ 'gallery.medium' | translate }}</dt>
+                  <dd>{{ artwork.medium }}</dd>
+                </div>
+              }
+              @if (artwork.size) {
+                <div class="lightbox__meta-row">
+                  <dt>{{ 'gallery.size' | translate }}</dt>
+                  <dd>{{ artwork.size }}</dd>
+                </div>
+              }
+            </dl>
+          }
+
+          @if (artwork.descriptionKey) {
+            <p class="lightbox__description">{{ artwork.descriptionKey | translate }}</p>
+          }
+        </div>
+      </div>
+
+      <button
+        class="lightbox__nav lightbox__nav--next"
+        type="button"
+        [attr.aria-label]="'gallery.next' | translate"
+        (click)="next(); $event.stopPropagation()">
+        &#8250;
+      </button>
+
+    </div>
+  }
+</section>

@@ -1,0 +1,93 @@
+// src/styles/_variables.scss
+
+:root {
+  // ===== COLOR: MARCA =====
+  --color-green-900: #0B3D24;   // verde oscuro (fondo/detalle)
+  --color-green-700: #1B5E3F;   // verde principal del logo
+  --color-green-500: #2E8B57;   // verde medio (hover/acentos)
+
+  --color-gold-700: #B8860B;    // dorado oscuro
+  --color-gold-500: #D4AF37;    // dorado principal (el del logo)
+  --color-gold-300: #F0C846;    // dorado claro (hover/brillo)
+
+  --color-blue-700: #0B2A6B;    // azul UE oscuro
+  --color-blue-500: #1A3C8C;    // azul UE principal
+  --color-blue-300: #3B5FCE;    // azul claro (acentos)
+
+  // ===== COLOR: NEUTROS =====
+  --color-black: #0A0A0A;       // fondo principal (no #000 puro, más suave)
+  --color-white: #FFFFFF;
+  --color-gray-100: #F5F5F5;
+  --color-gray-300: #C9C9C9;
+  --color-gray-500: #8A8A8A;
+  --color-gray-700: #3D3D3D;
+  --color-gray-900: #1A1A1A;    // fondo de tarjetas sobre negro
+
+  // ===== COLOR: ESTADOS DEL SISTEMA =====
+  --color-success: #2E8B57;     // reutiliza el verde de marca
+  --color-error: #D64545;
+  --color-warning: #E0A415;
+  --color-info: #3B5FCE;        // reutiliza el azul de marca
+
+  // ===== TIPOGRAFÍA =====
+  --font-heading: 'Playfair Display', serif;   // títulos, elegante/regio
+  --font-body: 'Inter', sans-serif;             // texto, legible
+
+  --fs-h1: 3rem;      // 48px
+  --fs-h2: 2.25rem;   // 36px
+  --fs-h3: 1.75rem;   // 28px
+  --fs-h4: 1.375rem;  // 22px
+  --fs-h5: 1.125rem;  // 18px
+  --fs-h6: 1rem;      // 16px
+  --fs-body: 1rem;    // 16px
+  --fs-small: 0.875rem; // 14px
+
+  --fw-regular: 400;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --lh-heading: 1.2;
+  --lh-body: 1.6;
+
+  // ===== ESPACIADO (escala de 8px) =====
+  --space-1: 0.25rem;  // 4px
+  --space-2: 0.5rem;   // 8px
+  --space-3: 0.75rem;  // 12px
+  --space-4: 1rem;     // 16px
+  --space-6: 1.5rem;   // 24px
+  --space-8: 2rem;     // 32px
+  --space-12: 3rem;    // 48px
+  --space-16: 4rem;    // 64px
+
+  // ===== BORDES =====
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  // ===== SOMBRAS =====
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  // ===== Z-INDEX =====
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+
+  // ===== TRANSICIONES =====
+  --transition-base: 0.2s ease-in-out;
+  --transition-slow: 0.4s ease-in-out;
+
+  // ===== CONTENEDOR =====
+  --container-max: 1280px;
+  --container-gutter: 1.5rem;
+}
+
+// ===== BREAKPOINTS (se usan en mixins, no como variable CSS) =====
+$bp-mobile: 576px;
+$bp-tablet: 768px;
+$bp-desktop: 1024px;
+$bp-large: 1280px;

@@ -1,0 +1,77 @@
+// src/styles/_mixins.scss
+@use 'variables' as *;
+
+// ===== BREAKPOINTS =====
+// Uso: @include respond(tablet) { ... }
+// Mobile-first: cada breakpoint aplica "a partir de" ese ancho hacia arriba
+@mixin respond($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (min-width: $bp-mobile) { @content; }
+  }
+  @else if $breakpoint == tablet {
+    @media (min-width: $bp-tablet) { @content; }
+  }
+  @else if $breakpoint == desktop {
+    @media (min-width: $bp-desktop) { @content; }
+  }
+  @else if $breakpoint == large {
+    @media (min-width: $bp-large) { @content; }
+  }
+  @else {
+    @warn "Breakpoint '#{$breakpoint}' no existe. Usa: mobile, tablet, desktop o large.";
+  }
+}
+
+// ===== CONTENEDOR CENTRAL =====
+// Uso: @include container;
+// Centra el contenido y limita su ancho máximo, con margen lateral en móvil
+@mixin container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-gutter);
+}
+
+// ===== TRUNCADO DE TEXTO =====
+// Uso: @include line-clamp(2);  → corta el texto a 2 líneas con "..."
+@mixin line-clamp($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// ===== FLEX CENTRADO =====
+// Uso: @include flex-center;
+@mixin flex-center($direction: row) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: center;
+  justify-content: center;
+}
+
+// ===== ESTADO DE FOCO ACCESIBLE =====
+// Reutiliza el mismo anillo dorado definido en el reset, por si necesitas
+// aplicarlo manualmente a un elemento custom (ej. una tarjeta clicable)
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--color-gold-300);
+    outline-offset: 2px;
+  }
+}
+
+// ===== EFECTO HOVER "ZOOM" (para los iconos que pediste) =====
+// Uso: @include hover-zoom(1.1);
+@mixin hover-zoom($scale: 1.08) {
+  transition: transform var(--transition-base);
+
+  &:hover {
+    transform: scale($scale);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &:hover {
+      transform: none;
+    }
+  }
+}

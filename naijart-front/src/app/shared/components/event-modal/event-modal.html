@@ -1,0 +1,25 @@
+<div class="event-modal__backdrop" (click)="close()">
+  <div
+    class="event-modal__panel"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="event.titleKey | translate"
+    (click)="$event.stopPropagation()"
+  >
+    <button type="button" class="event-modal__close" (click)="close()" [attr.aria-label]="'common.close' | translate">
+      &times;
+    </button>
+
+    @if (event.image) {
+      <img [src]="event.image" [alt]="event.titleKey | translate" class="event-modal__image" />
+    }
+
+    <p class="event-modal__date">{{ event.day }} {{ event.monthKey | translate }}</p>
+    <h3 class="event-modal__title">{{ event.titleKey | translate }}</h3>
+    <p class="event-modal__location">{{ event.locationKey | translate }}</p>
+
+    @if (event.descriptionKey) {
+      <p class="event-modal__description">{{ event.descriptionKey | translate }}</p>
+    }
+  </div>
+</div>

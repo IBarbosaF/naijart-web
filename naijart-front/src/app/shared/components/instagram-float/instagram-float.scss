@@ -1,0 +1,36 @@
+// Ajusta la ruta de @use según la ubicación final del componente
+// (asumiendo src/app/shared/components/instagram-float/instagram-float.scss)
+@use '../../../../styles/mixins' as *;
+
+.instagram-float {
+  @include flex-center;
+  @include hover-zoom(1.1);
+  @include focus-ring;
+
+  position: fixed;
+  right: var(--space-6);
+  bottom: var(--space-6);
+  z-index: var(--z-overlay);
+
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-gold-500);
+  color: var(--color-black);
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+
+  svg {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  &:hover {
+    background-color: var(--color-gold-300);
+  }
+
+  @include respond(tablet) {
+    right: var(--space-8);
+    bottom: var(--space-8);
+  }
+}

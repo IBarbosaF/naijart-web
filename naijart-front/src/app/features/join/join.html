@@ -1,0 +1,230 @@
+<section class="join">
+
+  <!-- ===== HERO ===== -->
+  <header class="join__hero">
+    <div class="join__hero-inner">
+      <h1 class="join__hero-title">{{ 'join.hero.title' | translate }}</h1>
+      <p class="join__hero-subtitle">{{ 'join.hero.subtitle' | translate }}</p>
+    </div>
+  </header>
+
+  <!-- ===== BENEFICIOS ===== -->
+  <section class="join__benefits" aria-labelledby="benefits-title">
+    <h2 id="benefits-title" class="join__section-title">{{ 'join.benefits.title' | translate }}</h2>
+
+    <div class="join__benefits-grid">
+      @for (benefit of benefits; track benefit.titleKey) {
+        <article class="benefit-card">
+          <div class="benefit-card__icon">
+            @switch (benefit.icon) {
+              @case ('globe') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M3 12h18M12 3c2.5 2.7 3.8 6 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-6-3.8-9s1.3-6.3 3.8-9Z" />
+                </svg>
+              }
+              @case ('users') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="8.5" cy="8" r="3.2" />
+                  <path d="M2.5 19c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5" />
+                  <circle cx="17" cy="8.5" r="2.5" />
+                  <path d="M15.8 13.7c2.5.3 4.2 2.2 4.2 5.3" />
+                </svg>
+              }
+              @case ('book') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M4 5.5C4 4.7 4.7 4 5.5 4H12v16H5.5A1.5 1.5 0 0 1 4 18.5v-13Z" />
+                  <path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H12v16h6.5a1.5 1.5 0 0 0 1.5-1.5v-13Z" />
+                </svg>
+              }
+              @case ('link') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M9.5 14.5 14.5 9.5" />
+                  <path d="M11 6.5 12.3 5.2a3.5 3.5 0 1 1 4.9 4.9L15.9 11.4" />
+                  <path d="M13 17.5 11.7 18.8a3.5 3.5 0 1 1-4.9-4.9L8.1 12.6" />
+                </svg>
+              }
+            }
+          </div>
+          <h3 class="benefit-card__title">{{ benefit.titleKey | translate }}</h3>
+          <p class="benefit-card__description">{{ benefit.descriptionKey | translate }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <!-- ===== CÓMO FUNCIONA ===== -->
+  <section class="join__steps" aria-labelledby="steps-title">
+    <h2 id="steps-title" class="join__section-title">{{ 'join.steps.title' | translate }}</h2>
+
+    <ol class="join__steps-list">
+      @for (step of steps; track step.number) {
+        <li class="step">
+          <span class="step__number">{{ step.number }}</span>
+          <div class="step__content">
+            <h3 class="step__title">{{ step.titleKey | translate }}</h3>
+            <p class="step__description">{{ step.descriptionKey | translate }}</p>
+          </div>
+        </li>
+      }
+    </ol>
+  </section>
+
+  <!-- ===== TESTIMONIOS ===== -->
+  <section class="join__testimonials" aria-labelledby="testimonials-title">
+    <h2 id="testimonials-title" class="join__section-title">{{ 'join.testimonials.title' | translate }}</h2>
+
+    <div class="join__testimonials-track">
+      @for (testimonial of testimonials; track testimonial.quoteKey) {
+        <blockquote class="testimonial-card">
+          <p class="testimonial-card__quote">"{{ testimonial.quoteKey | translate }}"</p>
+          <footer class="testimonial-card__author">
+            <span class="testimonial-card__name">{{ testimonial.nameKey | translate }}</span>
+            <span class="testimonial-card__role">{{ testimonial.roleKey | translate }}</span>
+          </footer>
+        </blockquote>
+      }
+    </div>
+  </section>
+
+  <!-- ===== FORMULARIO ===== -->
+  <section class="join__form-section" aria-labelledby="form-title">
+    <div class="join__form-wrapper">
+      <div class="join__form-intro">
+        <h2 id="form-title" class="join__section-title">{{ 'join.form.title' | translate }}</h2>
+        <p class="join__form-lead">{{ 'join.form.lead' | translate }}</p>
+      </div>
+
+      @if (formStatus() === 'success') {
+        <div class="join__success" role="status">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="join__success-icon">
+            <circle cx="12" cy="12" r="9" />
+            <path d="m8 12.5 2.5 2.5L16 9.5" />
+          </svg>
+          <h3 class="join__success-title">{{ 'join.success.title' | translate:{ name: formData().name } }}</h3>
+          <p class="join__success-text">{{ 'join.success.text' | translate:{ email: formData().email } }}</p>
+          <button type="button" class="btn btn--secondary" (click)="sendAnother()">
+            {{ 'join.success.again' | translate }}
+          </button>
+        </div>
+      } @else {
+        <form class="join__form" (ngSubmit)="onSubmit()" #joinForm="ngForm">
+
+          <!-- Selector de tipo de perfil -->
+          <div class="type-toggle" role="radiogroup" [attr.aria-label]="'join.form.typeLabel' | translate">
+            <button
+              type="button"
+              class="type-toggle__option"
+              [class.type-toggle__option--active]="formData().type === 'artist'"
+              role="radio"
+              [attr.aria-checked]="formData().type === 'artist'"
+              (click)="setType('artist')"
+            >
+              {{ 'join.form.artist' | translate }}
+            </button>
+            <button
+              type="button"
+              class="type-toggle__option"
+              [class.type-toggle__option--active]="formData().type === 'collaborator'"
+              role="radio"
+              [attr.aria-checked]="formData().type === 'collaborator'"
+              (click)="setType('collaborator')"
+            >
+              {{ 'join.form.collaborator' | translate }}
+            </button>
+          </div>
+
+          <div class="form-group">
+            <label for="name" class="form-label">{{ 'join.form.name' | translate }}</label>
+            <input
+              id="name"
+              type="text"
+              name="name"
+              class="form-input"
+              required
+              [ngModel]="formData().name"
+              (ngModelChange)="updateField('name', $event)"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="form-label">{{ 'join.form.email' | translate }}</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              class="form-input"
+              required
+              [ngModel]="formData().email"
+              (ngModelChange)="updateField('email', $event)"
+            />
+          </div>
+
+          @if (formData().type === 'artist') {
+            <div class="form-group">
+              <label for="portfolioLink" class="form-label">{{ 'join.form.portfolio' | translate }}</label>
+              <input
+                id="portfolioLink"
+                type="url"
+                name="portfolioLink"
+                class="form-input"
+                placeholder="https://..."
+                required
+                [ngModel]="formData().portfolioLink"
+                (ngModelChange)="updateField('portfolioLink', $event)"
+              />
+            </div>
+          } @else {
+            <div class="form-group">
+              <label for="interestArea" class="form-label">{{ 'join.form.interestArea' | translate }}</label>
+              <select
+                id="interestArea"
+                name="interestArea"
+                class="form-select"
+                required
+                [ngModel]="formData().interestArea"
+                (ngModelChange)="updateField('interestArea', $event)"
+              >
+                <option value="" disabled selected>{{ 'join.form.selectOption' | translate }}</option>
+                @for (area of interestAreas; track area.value) {
+                  <option [value]="area.value">{{ area.labelKey | translate }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="portfolioLink" class="form-label">{{ 'join.form.socials' | translate }}</label>
+              <input
+                id="portfolioLink"
+                type="url"
+                name="portfolioLink"
+                class="form-input"
+                placeholder="https://..."
+                [ngModel]="formData().portfolioLink"
+                (ngModelChange)="updateField('portfolioLink', $event)"
+              />
+            </div>
+          }
+
+          <div class="form-group">
+            <label for="message" class="form-label">{{ 'join.form.message' | translate }}</label>
+            <textarea
+              id="message"
+              name="message"
+              class="form-textarea"
+              rows="4"
+              required
+              [ngModel]="formData().message"
+              (ngModelChange)="updateField('message', $event)"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn--primary" [disabled]="joinForm.invalid">
+            {{ 'join.form.submit' | translate }}
+          </button>
+        </form>
+      }
+    </div>
+  </section>
+
+</section>
