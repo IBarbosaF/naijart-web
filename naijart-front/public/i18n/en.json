@@ -8,6 +8,7 @@
   },
   "common": {
     "login": "Log in",
+    "logout": "Log out",
     "mainNav": "Main navigation",
     "mobileNav": "Mobile navigation",
     "langSelector": "Language selector",

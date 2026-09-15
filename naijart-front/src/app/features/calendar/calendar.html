@@ -3,7 +3,7 @@
   <div class="calendar__upcoming">
     <h3 class="calendar__upcoming-title">{{ 'calendar.upcoming' | translate }}</h3>
     <ul class="calendar__upcoming-list">
-      @for (event of events; track event.id) {
+      @for (event of upcomingEvents(); track event.id) {
         <li class="calendar__upcoming-item" (click)="openEvent(event)">
           <span class="calendar__upcoming-date">{{ formatEventDate(event.date) }}</span>
           <span class="calendar__upcoming-name">{{ event.titleKey | translate }}</span>
@@ -80,9 +80,40 @@
 
       <div class="event-modal__body">
         <h3 class="event-modal__title">{{ event.titleKey | translate }}</h3>
-        <p class="event-modal__meta">{{ formatEventDate(event.date) }} · {{ event.time }}</p>
-        <p class="event-modal__location">{{ event.locationKey | translate }}</p>
-        <p class="event-modal__description">{{ event.descriptionKey | translate }}</p>
+        <p class="event-modal__meta">
+          {{ formatEventDate(event.date) }}@if (event.startTime) { · {{ event.startTime }}@if (event.endTime) { - {{ event.endTime }} } }
+        </p>
+        @if (event.locationKey) {
+          <p class="event-modal__location">{{ event.locationKey | translate }}</p>
+        }
+        @if (event.descriptionKey) {
+          <p class="event-modal__description">{{ event.descriptionKey | translate }}</p>
+        }
+
+        @if (isArtist() && event.isReal) {
+          <div class="event-modal__request">
+            @if (requestStatusFor(event); as status) {
+              <p class="event-modal__request-status event-modal__request-status--{{ status }}">
+                @switch (status) {
+                  @case ('pending') { Solicitud enviada, pendiente de respuesta. }
+                  @case ('approved') { Solicitud aprobada — ¡nos vemos allí! }
+                  @case ('rejected') { Solicitud rechazada. }
+                }
+              </p>
+            } @else {
+              <button
+                type="button"
+                class="btn btn--primary btn--sm"
+                [disabled]="isRequesting()"
+                (click)="requestToJoin(event)">
+                {{ isRequesting() ? 'Enviando...' : 'Solicitar apuntarme' }}
+              </button>
+            }
+            @if (requestError()) {
+              <p class="event-modal__request-error">{{ requestError() }}</p>
+            }
+          </div>
+        }
       </div>
     </div>
   </div>

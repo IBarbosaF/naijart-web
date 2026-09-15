@@ -12,8 +12,12 @@ module.exports = (pool) => {
     try {
       const showAll = req.query.status === 'all';
       const query = showAll
-        ? 'SELECT * FROM artworks ORDER BY created_at DESC'
-        : "SELECT * FROM artworks WHERE status != 'sold' ORDER BY created_at DESC";
+        ? `SELECT a.*, ap.name AS artist_name, ap.surname AS artist_surname
+           FROM artworks a JOIN artist_profiles ap ON ap.user_id = a.artist_id
+           ORDER BY a.created_at DESC`
+        : `SELECT a.*, ap.name AS artist_name, ap.surname AS artist_surname
+           FROM artworks a JOIN artist_profiles ap ON ap.user_id = a.artist_id
+           WHERE a.status != 'sold' ORDER BY a.created_at DESC`;
 
       const [rows] = await pool.query(query);
       res.json({ ok: true, artworks: rows });
@@ -27,7 +31,12 @@ module.exports = (pool) => {
   // GET /artworks/:id
   router.get('/:id', async (req, res) => {
     try {
-      const [rows] = await pool.query('SELECT * FROM artworks WHERE id = ?', [req.params.id]);
+      const [rows] = await pool.query(
+        `SELECT a.*, ap.name AS artist_name, ap.surname AS artist_surname
+         FROM artworks a JOIN artist_profiles ap ON ap.user_id = a.artist_id
+         WHERE a.id = ?`,
+        [req.params.id]
+      );
       if (rows.length === 0) {
         return res.status(404).json({ ok: false, error: 'Obra no encontrada.' });
       }

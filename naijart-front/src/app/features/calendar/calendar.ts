@@ -1,15 +1,20 @@
 import { Component, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { Events, EventItem, RequestStatus } from '../../core/services/events';
+import { Auth } from '../../core/services/auth';
+import { environment } from '../../../environments/environment';
 
 interface CalendarEvent {
-  id: number;
-  titleKey: string;        // clave de traducción, ej. 'calendar.events.e1.title'
+  id: number | string;
+  titleKey: string;
   date: string; // ISO 'YYYY-MM-DD'
-  time: string;
+  startTime: string; // 'HH:MM' o ''
+  endTime: string;
   locationKey: string;
   descriptionKey: string;
   image: string;
+  isReal: boolean; // true = viene del backend (se puede solicitar apuntarse)
 }
 
 interface CalendarDay {
@@ -37,6 +42,10 @@ const DATE_LOCALES: Record<string, string> = {
 })
 export class Calendar {
   private readonly translate = inject(TranslateService);
+  private readonly eventsService = inject(Events);
+  private readonly auth = inject(Auth);
+
+  protected readonly isArtist = computed(() => this.auth.role() === 'artist');
 
   // Lunes primero, igual que la rejilla
   readonly weekDayKeys = ['d1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7'].map(
@@ -46,45 +55,138 @@ export class Calendar {
   currentDate = signal(new Date(2026, 8, 1)); // arranca en septiembre 2026
   selectedEvent = signal<CalendarEvent | null>(null);
 
-  // Datos de ejemplo — sustituir por contenido real del cliente
-  events: CalendarEvent[] = [
+  // Estado de mis propias solicitudes (solo artist), por event id
+  protected readonly myRequests = signal<Map<string, RequestStatus>>(new Map());
+  protected readonly isRequesting = signal(false);
+  protected readonly requestError = signal<string | null>(null);
+
+  // Datos de ejemplo — se quedan como respaldo mientras no haya
+  // suficientes eventos reales creados por un admin
+  private readonly exampleEvents: CalendarEvent[] = [
     {
       id: 1,
       titleKey: 'calendar.events.e1.title',
       date: '2026-09-12',
-      time: '18:00',
+      startTime: '18:00',
+      endTime: '',
       locationKey: 'calendar.events.e1.location',
       descriptionKey: 'calendar.events.e1.description',
-      image: '/images/gallery/event-raices.jpg'
+      image: '/images/gallery/event-raices.jpg',
+      isReal: false
     },
     {
       id: 2,
       titleKey: 'calendar.events.e2.title',
       date: '2026-09-19',
-      time: '11:00',
+      startTime: '11:00',
+      endTime: '',
       locationKey: 'calendar.events.e2.location',
       descriptionKey: 'calendar.events.e2.description',
-      image: '/images/gallery/event-tejido.jpg'
+      image: '/images/gallery/event-tejido.jpg',
+      isReal: false
     },
     {
       id: 3,
       titleKey: 'calendar.events.e3.title',
       date: '2026-09-26',
-      time: '20:00',
+      startTime: '20:00',
+      endTime: '',
       locationKey: 'calendar.events.e3.location',
       descriptionKey: 'calendar.events.e3.description',
-      image: '/images/gallery/event-poesia.jpg'
+      image: '/images/gallery/event-poesia.jpg',
+      isReal: false
     },
     {
       id: 4,
       titleKey: 'calendar.events.e4.title',
       date: '2026-10-03',
-      time: '19:00',
+      startTime: '19:00',
+      endTime: '',
       locationKey: 'calendar.events.e4.location',
       descriptionKey: 'calendar.events.e4.description',
-      image: '/images/gallery/event-charla.jpg'
+      image: '/images/gallery/event-charla.jpg',
+      isReal: false
     }
   ];
+
+  events = signal<CalendarEvent[]>(this.exampleEvents);
+
+  // Lista para "Próximos eventos": siempre ordenada por fecha ascendente,
+  // independientemente del orden en que hayan llegado (reales primero, luego ejemplo).
+  protected readonly upcomingEvents = computed(() =>
+    [...this.events()].sort((a, b) => a.date.localeCompare(b.date))
+  );
+
+  constructor() {
+    this.loadRealEvents();
+    if (this.isArtist()) {
+      this.loadMyRequests();
+    }
+  }
+
+  private async loadRealEvents(): Promise<void> {
+    try {
+      const real = await this.eventsService.getAll();
+      const mapped = real.map((e) => this.toCalendarEvent(e));
+      this.events.set([...mapped, ...this.exampleEvents]);
+    } catch {
+      // Si el backend no responde, nos quedamos con los de ejemplo
+    }
+  }
+
+  private async loadMyRequests(): Promise<void> {
+    try {
+      const requests = await this.eventsService.getMyRequests();
+      const map = new Map<string, RequestStatus>();
+      for (const req of requests) {
+        const match = this.events().find(
+          (e) => e.isReal && e.date === req.event_date
+        );
+        if (match) map.set(String(match.id), req.status);
+      }
+      this.myRequests.set(map);
+    } catch {
+      // Silencioso — si falla, simplemente no se muestra el estado de solicitud
+    }
+  }
+
+  private toCalendarEvent(event: EventItem): CalendarEvent {
+    return {
+      id: event.id,
+      titleKey: event.title,
+      date: event.event_date.substring(0, 10),
+      startTime: event.start_time ? event.start_time.substring(0, 5) : '',
+      endTime: event.end_time ? event.end_time.substring(0, 5) : '',
+      locationKey: event.location ?? '',
+      descriptionKey: event.description ?? '',
+      image: event.image_url
+        ? `${environment.apiUrl}${event.image_url}`
+        : '/images/gallery/event-raices.jpg', // placeholder si el admin no subió foto
+      isReal: true
+    };
+  }
+
+  async requestToJoin(event: CalendarEvent): Promise<void> {
+    if (!event.isReal) return;
+
+    this.isRequesting.set(true);
+    this.requestError.set(null);
+
+    try {
+      await this.eventsService.requestToJoin(String(event.id));
+      const updated = new Map(this.myRequests());
+      updated.set(String(event.id), 'pending');
+      this.myRequests.set(updated);
+    } catch (error: any) {
+      this.requestError.set(error?.error?.error ?? 'Error al enviar la solicitud.');
+    } finally {
+      this.isRequesting.set(false);
+    }
+  }
+
+  requestStatusFor(event: CalendarEvent): RequestStatus | null {
+    return this.myRequests().get(String(event.id)) ?? null;
+  }
 
   monthLabel = computed(() => {
     const d = this.currentDate();
@@ -125,7 +227,7 @@ export class Calendar {
       day: date.getDate(),
       isCurrentMonth,
       isToday: date.toDateString() === today.toDateString(),
-      events: this.events.filter(e => this.isSameDate(e.date, date))
+      events: this.events().filter(e => this.isSameDate(e.date, date))
     };
   }
 

@@ -1,5 +1,6 @@
 const express = require('express');
 const { verifyToken, requireRole } = require('../middleware/authMiddleware');
+const upload = require('../middleware/upload');
 
 const router = express.Router();
 
@@ -55,19 +56,21 @@ module.exports = (pool) => {
 
   // ===== CREAR UN EVENTO (solo admin) =====
   // POST /events
-  // body: { title, description, event_date, location }
-  router.post('/', verifyToken, requireRole('admin'), async (req, res) => {
-    const { title, description, event_date, location } = req.body;
+  // form-data: title, description, event_date, start_time, end_time, location + archivo "image"
+  router.post('/', verifyToken, requireRole('admin'), upload.single('image'), async (req, res) => {
+    const { title, description, event_date, start_time, end_time, location } = req.body;
 
     if (!title || !event_date) {
       return res.status(400).json({ ok: false, error: 'Título y fecha son obligatorios.' });
     }
 
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
     try {
       await pool.query(
-        `INSERT INTO events (id, title, description, event_date, location, created_by)
-         VALUES (UUID(), ?, ?, ?, ?, ?)`,
-        [title, description || null, event_date, location || null, req.user.id]
+        `INSERT INTO events (id, title, description, event_date, start_time, end_time, location, image_url, created_by)
+         VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [title, description || null, event_date, start_time || null, end_time || null, location || null, imageUrl, req.user.id]
       );
       res.status(201).json({ ok: true, message: 'Evento creado correctamente.' });
     } catch (error) {
@@ -78,8 +81,9 @@ module.exports = (pool) => {
 
   // ===== EDITAR UN EVENTO (solo admin) =====
   // PUT /events/:id
-  router.put('/:id', verifyToken, requireRole('admin'), async (req, res) => {
-    const { title, description, event_date, location } = req.body;
+  // form-data: los mismos campos, + archivo "image" opcional (si no se manda, se conserva la imagen actual)
+  router.put('/:id', verifyToken, requireRole('admin'), upload.single('image'), async (req, res) => {
+    const { title, description, event_date, start_time, end_time, location } = req.body;
 
     try {
       const [rows] = await pool.query('SELECT * FROM events WHERE id = ?', [req.params.id]);
@@ -87,13 +91,18 @@ module.exports = (pool) => {
         return res.status(404).json({ ok: false, error: 'Evento no encontrado.' });
       }
 
+      const imageUrl = req.file ? `/uploads/${req.file.filename}` : rows[0].image_url;
+
       await pool.query(
-        `UPDATE events SET title = ?, description = ?, event_date = ?, location = ? WHERE id = ?`,
+        `UPDATE events SET title = ?, description = ?, event_date = ?, start_time = ?, end_time = ?, location = ?, image_url = ? WHERE id = ?`,
         [
           title ?? rows[0].title,
           description ?? rows[0].description,
           event_date ?? rows[0].event_date,
+          start_time ?? rows[0].start_time,
+          end_time ?? rows[0].end_time,
           location ?? rows[0].location,
+          imageUrl,
           req.params.id
         ]
       );
@@ -129,7 +138,6 @@ module.exports = (pool) => {
         return res.status(404).json({ ok: false, error: 'Evento no encontrado.' });
       }
 
-      // Evitar que el mismo artista solicite el mismo evento dos veces
       const [existing] = await pool.query(
         'SELECT id FROM event_requests WHERE event_id = ? AND artist_id = ?',
         [req.params.id, req.user.id]

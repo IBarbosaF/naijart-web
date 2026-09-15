@@ -1,0 +1,149 @@
+// src/app/features/register/register.scss
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.register {
+  @include flex-center;
+  min-height: 60vh;
+  padding-block: var(--space-16);
+  @include container;
+}
+
+.register__card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--color-gray-900);
+  border: 1px solid var(--color-gray-700);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+}
+
+.register__title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h3);
+  color: var(--color-white);
+  text-align: center;
+  margin: 0 0 var(--space-6);
+}
+
+.register__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+// Mismas clases genéricas que en Login — si ya tenéis _forms.scss con
+// estilos propios para inputs/selects, sustituir por esas en vez de esto.
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+
+  label {
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-semibold);
+    color: var(--color-gray-300);
+  }
+
+  input,
+  select {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--color-black);
+    border: 1px solid var(--color-gray-700);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3);
+    font-family: var(--font-body);
+    color: var(--color-white);
+    transition: border-color var(--transition-base);
+
+    &:focus-visible {
+      outline: 2px solid var(--color-gold-300);
+      outline-offset: 2px;
+      border-color: var(--color-gold-500);
+    }
+
+    &[aria-invalid='true'] {
+      border-color: var(--color-error);
+    }
+  }
+}
+
+.password-field {
+  position: relative;
+  display: flex;
+
+  input {
+    padding-right: calc(var(--space-3) * 2 + 1.25rem); // deja hueco al icono
+  }
+}
+
+.password-field__toggle {
+  position: absolute;
+  top: 50%;
+  right: var(--space-3);
+  translate: 0 -50%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-gray-500);
+  transition: color var(--transition-base);
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    display: block;
+  }
+
+  &:hover {
+    color: var(--color-gold-500);
+  }
+}
+
+.form-error {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--color-error);
+  margin: 0;
+}
+
+.register__server-error {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--color-error);
+  background: rgba(214, 69, 69, 0.1);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  margin: 0;
+}
+
+.register__server-success {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--color-success);
+  background: rgba(46, 139, 87, 0.1);
+  border: 1px solid var(--color-success);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  margin: 0;
+}
+
+.register__login-link {
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--color-gray-300);
+  margin: var(--space-6) 0 0;
+
+  a {
+    color: var(--color-gold-500);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

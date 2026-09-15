@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Language } from '../../core/services/language';
+import { Auth } from '../../core/services/auth';
 
 interface NavLink {
   key: string;
@@ -21,6 +22,12 @@ type Lang = 'en' | 'es' | 'fr';
 export class Header {
   private readonly translate = inject(TranslateService);
   private readonly language = inject(Language);
+  private readonly auth = inject(Auth);
+
+  // Estado de sesión, leído directamente del servicio Auth
+  protected readonly isLoggedIn = this.auth.isLoggedIn;
+  protected readonly currentUser = this.auth.currentUser;
+  protected readonly role = this.auth.role;
 
   // Estado del menú móvil (hamburguesa)
   protected readonly isMenuOpen = signal(false);
@@ -53,6 +60,11 @@ export class Header {
 
   protected setLang(lang: Lang): void {
     this.language.setLang(lang);
+  }
+
+  protected logout(): void {
+    this.closeMenu();
+    this.auth.logout();
   }
 
   @HostListener('window:scroll')

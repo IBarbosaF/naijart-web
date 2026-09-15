@@ -26,7 +26,22 @@
         }
       </div>
 
-      <a routerLink="/login" class="btn btn--ghost btn--sm header__login">{{ 'common.login' | translate }}</a>
+      @if (isLoggedIn()) {
+        <div class="header__user">
+          @if (role() === 'artist') {
+            <a routerLink="/panel/artista/obras" class="header__panel-link">Mi panel</a>
+          }
+          @if (role() === 'admin') {
+            <a routerLink="/panel/admin/eventos" class="header__panel-link">Panel admin</a>
+          }
+          <span class="header__user-email">{{ currentUser()?.email }}</span>
+          <button type="button" class="btn btn--ghost btn--sm" (click)="logout()">
+            {{ 'common.logout' | translate }}
+          </button>
+        </div>
+      } @else {
+        <a routerLink="/login" class="btn btn--ghost btn--sm header__login">{{ 'common.login' | translate }}</a>
+      }
 
       <button
         type="button"
@@ -68,7 +83,22 @@
         }
       </div>
 
-      <a routerLink="/login" class="btn btn--ghost btn--sm" (click)="closeMenu()">{{ 'common.login' | translate }}</a>
+      @if (isLoggedIn()) {
+        <div class="header__user header__user--mobile">
+          @if (role() === 'artist') {
+            <a routerLink="/panel/artista/obras" class="header__panel-link" (click)="closeMenu()">Mi panel</a>
+          }
+          @if (role() === 'admin') {
+            <a routerLink="/panel/admin/eventos" class="header__panel-link" (click)="closeMenu()">Panel admin</a>
+          }
+          <span class="header__user-email">{{ currentUser()?.email }}</span>
+          <button type="button" class="btn btn--ghost btn--sm" (click)="logout()">
+            {{ 'common.logout' | translate }}
+          </button>
+        </div>
+      } @else {
+        <a routerLink="/login" class="btn btn--ghost btn--sm" (click)="closeMenu()">{{ 'common.login' | translate }}</a>
+      }
     </div>
   </div>
 </header>

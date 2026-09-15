@@ -8,6 +8,7 @@
   },
   "common": {
     "login": "Connexion",
+    "logout": "Déconnexion",
     "mainNav": "Navigation principale",
     "mobileNav": "Navigation mobile",
     "langSelector": "Sélecteur de langue",

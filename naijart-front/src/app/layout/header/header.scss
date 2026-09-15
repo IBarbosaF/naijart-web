@@ -160,6 +160,46 @@
     }
   }
 
+  // ===== SESIÓN INICIADA (email + logout) =====
+  &__user {
+    display: none;
+    align-items: center;
+    gap: var(--space-3);
+
+    @include respond(desktop) {
+      display: flex;
+    }
+
+    &--mobile {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+  }
+
+  &__user-email {
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+    color: var(--color-gray-300);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 14ch;
+  }
+
+  &__panel-link {
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-semibold);
+    color: var(--color-gold-500);
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   // ===== BOTÓN HAMBURGUESA =====
   &__burger {
     @include flex-center(column);

@@ -16,6 +16,7 @@ const pool = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+  dateStrings: true, // para que las fechas se devuelvan como strings y no como objetos Date
 });
 
 const authRoutes = require('./routes/auth')(pool);

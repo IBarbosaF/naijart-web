@@ -1,0 +1,135 @@
+<section class="admin-events">
+  <div class="admin-events__container">
+
+    <header class="admin-events__header">
+      <h1>Gestionar eventos</h1>
+      <p>Crea eventos del calendario y revisa las solicitudes de los artistas.</p>
+    </header>
+
+    <!-- ===== FORMULARIO CREAR / EDITAR ===== -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="admin-events__form">
+      <h2>{{ editingId() ? 'Editar evento' : 'Crear evento' }}</h2>
+
+      <div class="form-group">
+        <label for="title">Título</label>
+        <input id="title" type="text" formControlName="title" />
+        @if (form.get('title')?.invalid && form.get('title')?.touched) {
+          <p class="form-error">El título es obligatorio.</p>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <textarea id="description" formControlName="description" rows="3"></textarea>
+      </div>
+
+      <div class="admin-events__row">
+        <div class="form-group">
+          <label for="event_date">Fecha</label>
+          <input id="event_date" type="date" formControlName="event_date" />
+          @if (form.get('event_date')?.invalid && form.get('event_date')?.touched) {
+            <p class="form-error">La fecha es obligatoria.</p>
+          }
+        </div>
+        <div class="form-group">
+          <label for="location">Ubicación</label>
+          <input id="location" type="text" formControlName="location" placeholder="Sevilla, centro cultural..." />
+        </div>
+      </div>
+
+      <div class="admin-events__row">
+        <div class="form-group">
+          <label for="start_time">Hora de inicio</label>
+          <input id="start_time" type="time" formControlName="start_time" />
+        </div>
+        <div class="form-group">
+          <label for="end_time">Hora de fin</label>
+          <input id="end_time" type="time" formControlName="end_time" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="image">Imagen {{ editingId() ? '(déjalo vacío para conservar la actual)' : '' }}</label>
+        <input id="image" type="file" accept="image/jpeg,image/png,image/webp" (change)="onFileSelected($event)" />
+        @if (selectedFileName()) {
+          <p class="admin-events__file-name">{{ selectedFileName() }}</p>
+        }
+      </div>
+
+      @if (errorMessage()) {
+        <p class="admin-events__server-error">{{ errorMessage() }}</p>
+      }
+
+      <div class="admin-events__form-actions">
+        <button type="submit" class="btn btn--primary" [disabled]="isSaving()">
+          {{ isSaving() ? 'Guardando...' : (editingId() ? 'Guardar cambios' : 'Crear evento') }}
+        </button>
+        @if (editingId()) {
+          <button type="button" class="btn btn--ghost" (click)="cancelEdit()">Cancelar</button>
+        }
+      </div>
+    </form>
+
+    <!-- ===== LISTADO DE EVENTOS ===== -->
+    <div class="admin-events__list">
+      <h2>Eventos creados</h2>
+
+      @if (isLoading()) {
+        <p class="admin-events__empty">Cargando...</p>
+      } @else if (events().length === 0) {
+        <p class="admin-events__empty">Todavía no hay eventos creados.</p>
+      } @else {
+        @for (event of events(); track event.id) {
+          <article class="event-card">
+            <div class="event-card__main">
+              @if (event.image_url) {
+                <img [src]="apiUrl + event.image_url" [alt]="event.title" class="event-card__image" />
+              }
+              <div class="event-card__info">
+                <h3>{{ event.title }}</h3>
+                <p class="event-card__meta">
+                  {{ event.event_date }}
+                  @if (event.start_time) { · {{ event.start_time.substring(0, 5) }}@if (event.end_time) { - {{ event.end_time.substring(0, 5) }} } }
+                  @if (event.location) { · {{ event.location }} }
+                </p>
+              </div>
+              <div class="event-card__actions">
+                <button type="button" class="btn btn--ghost btn--sm" (click)="toggleRequests(event)">
+                  {{ expandedEventId() === event.id ? 'Ocultar solicitudes' : 'Ver solicitudes' }}
+                </button>
+                <button type="button" class="btn btn--ghost btn--sm" (click)="startEdit(event)">Editar</button>
+                <button type="button" class="btn btn--ghost btn--sm event-card__delete" (click)="deleteEvent(event)">Borrar</button>
+              </div>
+            </div>
+
+            @if (expandedEventId() === event.id) {
+              <div class="event-card__requests">
+                @if (isLoadingRequests()) {
+                  <p class="admin-events__empty">Cargando solicitudes...</p>
+                } @else if (requests().length === 0) {
+                  <p class="admin-events__empty">Nadie ha solicitado apuntarse todavía.</p>
+                } @else {
+                  @for (request of requests(); track request.id) {
+                    <div class="request-row">
+                      <span class="request-row__name">{{ request.name }} {{ request.surname }}</span>
+                      <span class="request-row__status request-row__status--{{ request.status }}">
+                        {{ request.status === 'pending' ? 'Pendiente' : request.status === 'approved' ? 'Aprobada' : 'Rechazada' }}
+                      </span>
+                      @if (request.status === 'pending') {
+                        <div class="request-row__actions">
+                          <button type="button" class="btn btn--primary btn--sm" (click)="respondToRequest(event, request, 'approved')">Aprobar</button>
+                          <button type="button" class="btn btn--ghost btn--sm" (click)="respondToRequest(event, request, 'rejected')">Rechazar</button>
+                        </div>
+                      }
+                    </div>
+                  }
+                }
+              </div>
+            }
+          </article>
+        }
+      }
+    </div>
+
+  </div>
+</section>

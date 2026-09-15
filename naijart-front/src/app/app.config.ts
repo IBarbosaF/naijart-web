@@ -1,9 +1,10 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, TitleStrategy, withInMemoryScrolling } from '@angular/router';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { tokenInterceptor } from './core/interceptors/tokens';
 
 import { routes } from './app.routes';
 import { TranslatedTitleStrategy } from './core/services/title-strategy';
@@ -22,7 +23,7 @@ export const appConfig: ApplicationConfig = {
     ),
     { provide: TitleStrategy, useClass: TranslatedTitleStrategy },
     provideClientHydration(withEventReplay()),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(), withInterceptors([tokenInterceptor])),
     provideTranslateService({
       loader: provideTranslateHttpLoader({
         prefix: 'i18n/',

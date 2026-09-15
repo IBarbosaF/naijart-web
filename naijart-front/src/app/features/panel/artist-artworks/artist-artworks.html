@@ -1,0 +1,111 @@
+<section class="artist-artworks">
+  <div class="artist-artworks__container">
+
+    <header class="artist-artworks__header">
+      <h1>Mis obras</h1>
+      <p>Sube, edita o retira tus obras de la galería.</p>
+    </header>
+
+    <!-- ===== FORMULARIO CREAR / EDITAR ===== -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="artist-artworks__form">
+      <h2>{{ editingId() ? 'Editar obra' : 'Subir nueva obra' }}</h2>
+
+      <div class="form-group">
+        <label for="title">Título</label>
+        <input id="title" type="text" formControlName="title" />
+        @if (form.get('title')?.invalid && form.get('title')?.touched) {
+          <p class="form-error">El título es obligatorio.</p>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <textarea id="description" formControlName="description" rows="3"></textarea>
+      </div>
+
+      <div class="artist-artworks__row">
+        <div class="form-group">
+          <label for="style">Estilo / técnica</label>
+          <input id="style" type="text" formControlName="style" placeholder="Óleo, acrílico..." />
+        </div>
+        <div class="form-group">
+          <label for="artwork_date">Fecha</label>
+          <input id="artwork_date" type="date" formControlName="artwork_date" />
+        </div>
+      </div>
+
+      <div class="artist-artworks__row">
+        <div class="form-group">
+          <label for="price">Precio (€)</label>
+          <input id="price" type="number" min="0" step="0.01" formControlName="price" />
+        </div>
+
+        @if (editingId()) {
+          <div class="form-group">
+            <label for="status">Estado</label>
+            <select id="status" formControlName="status">
+              <option value="available">Disponible</option>
+              <option value="reserved">Reservada</option>
+              <option value="sold">Vendida</option>
+            </select>
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="image">Imagen {{ editingId() ? '(déjalo vacío para conservar la actual)' : '' }}</label>
+        <input id="image" type="file" accept="image/jpeg,image/png,image/webp" (change)="onFileSelected($event)" />
+        @if (selectedFileName()) {
+          <p class="artist-artworks__file-name">{{ selectedFileName() }}</p>
+        }
+      </div>
+
+      @if (errorMessage()) {
+        <p class="artist-artworks__server-error">{{ errorMessage() }}</p>
+      }
+
+      <div class="artist-artworks__form-actions">
+        <button type="submit" class="btn btn--primary" [disabled]="isSaving()">
+          {{ isSaving() ? 'Guardando...' : (editingId() ? 'Guardar cambios' : 'Subir obra') }}
+        </button>
+        @if (editingId()) {
+          <button type="button" class="btn btn--ghost" (click)="cancelEdit()">Cancelar</button>
+        }
+      </div>
+    </form>
+
+    <!-- ===== LISTADO DE MIS OBRAS ===== -->
+    <div class="artist-artworks__list">
+      <h2>Obras ya publicadas</h2>
+
+      @if (isLoading()) {
+        <p class="artist-artworks__empty">Cargando...</p>
+      } @else if (artworks().length === 0) {
+        <p class="artist-artworks__empty">Todavía no has subido ninguna obra.</p>
+      } @else {
+        <div class="artist-artworks__grid">
+          @for (artwork of artworks(); track artwork.id) {
+            <article class="artwork-card">
+              @if (artwork.image_url) {
+                <img [src]="apiUrl + artwork.image_url" [alt]="artwork.title" class="artwork-card__image" />
+              } @else {
+                <div class="artwork-card__image artwork-card__image--placeholder"></div>
+              }
+              <div class="artwork-card__body">
+                <h3>{{ artwork.title }}</h3>
+                <p class="artwork-card__status artwork-card__status--{{ artwork.status }}">
+                  {{ artwork.status === 'available' ? 'Disponible' : artwork.status === 'reserved' ? 'Reservada' : 'Vendida' }}
+                </p>
+                <div class="artwork-card__actions">
+                  <button type="button" class="btn btn--ghost btn--sm" (click)="startEdit(artwork)">Editar</button>
+                  <button type="button" class="btn btn--ghost btn--sm artwork-card__delete" (click)="deleteArtwork(artwork)">Borrar</button>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </div>
+
+  </div>
+</section>

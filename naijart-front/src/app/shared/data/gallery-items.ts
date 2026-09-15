@@ -2,14 +2,16 @@
 // Fuente única de datos de galería. La usa el preview del Home y el
 // componente de Galería — así ambos muestran lo mismo sin duplicar la lista.
 //
-// Dos tipos de entrada conviven aquí:
-// - Obras reales: título/artista en texto fijo (title), no se traducen.
+// Tres tipos de entrada conviven aquí:
+// - Obras reales curadas a mano: título/artista en texto fijo (title), no se traducen.
 // - Obras de ejemplo (placeholder, ids 7-18): título traducido vía
 //   titleKey, apuntando a las claves ya existentes en los 3 JSON
 //   (gallery.items.i1...i12). Se quedan mientras no haya más obras reales.
+// - Obras reales del backend (subidas por artistas vía /panel): se añaden
+//   en tiempo de ejecución desde gallery.ts, no viven en este archivo.
 
 export interface GalleryItem {
-  id: number;
+  id: number | string;     // number para los datos de ejemplo, string (UUID) para obras reales del backend
   slug: string;
   title?: string;          // título fijo — usar en obras reales
   titleKey?: string;       // clave i18n — usar en obras de ejemplo
@@ -18,7 +20,8 @@ export interface GalleryItem {
   year?: number;
   medium?: string;         // técnica — texto fijo, ej. 'Oil on canvas'
   size?: string;           // medidas — texto fijo
-  // Ruta dentro de public/images/gallery/
+  // Ruta dentro de public/images/gallery/ para las estáticas,
+  // o URL absoluta al backend para las obras reales
   image: string;
   descriptionKey?: string; // opcional — texto curatorial traducido
 }
